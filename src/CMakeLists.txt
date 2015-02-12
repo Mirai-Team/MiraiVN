@@ -1,3 +1,8 @@
+file(GLOB_RECURSE sources_display
+    ${CMAKE_CURRENT_SOURCE_DIR}/display/* 
+    ${CMAKE_SOURCE_DIR}/include/display/*
+)
+
 set(core_sources
     ${sources_display}
 )
