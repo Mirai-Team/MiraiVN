@@ -1,9 +1,30 @@
 #include "display/DialogueFrame.hpp"
 #include "display/DialogueFrameStream.hpp"
 
-vne::DialogueFrame::DialogueFrame(sf::Texture texture)
+vne::DialogueFrame::DialogueFrame(vne::DialogueSkin dialogueSkin)
 {
-    sprite_.setTexture(texture);
+    vne::DialogueSkin::Skin skin = dialogueSkin.getSkin();
+
+    sprite_ = skin.sprite;
+    sprite_.setPosition(skin.framePosition);
+
+    if (font_.loadFromFile(skin.font))
+    {
+        name_.setFont(font_);
+        text_.setFont(font_);
+    }
+
+    name_.setCharacterSize(skin.fontSize);
+    text_.setCharacterSize(skin.fontSize);
+
+    text_.setColor(skin.textColor);
+    name_.setColor(sf::Color::White);
+
+    name_.setPosition(skin.namePosition);
+    text_.setPosition(skin.textPosition);
+
+    name_.setString("");
+    text_.setString("");
 }
 
 sf::Sprite vne::DialogueFrame::getSprite()
@@ -11,47 +32,29 @@ sf::Sprite vne::DialogueFrame::getSprite()
     return sprite_;
 }
 
-void vne::DialogueFrame::setColor(sf::Color color)
-{
-    sprite_.setColor(color);
-}
-
-void vne::DialogueFrame::setPosition(sf::Vector2f position)
-{
-    sprite_.setPosition(position);
-}
-
-void vne::DialogueFrame::setNamePosition(sf::Vector2f position)
-{
-    name_.setPosition(position);
-}
-
-void vne::DialogueFrame::setName(sf::Text name)
-{
-    name_ = name;
-}
-
-void vne::DialogueFrame::setName(std::string name)
-{
-    name_.setString(name);
-}
-
 sf::Text vne::DialogueFrame::getName()
 {
     return name_;
 }
 
-void vne::DialogueFrame::changeDialogue(std::string name, std::string text)
+sf::Text vne::DialogueFrame::getText()
 {
-    name_.setString(name);
+    return text_;
+}
+
+void vne::DialogueFrame::changeDialogue(vne::Character character, std::string text)
+{
+    name_.setString(character.getName());
+    name_.setColor(character.getColor());
+    text_.setString(text);
 }
 
 vne::DialogueFrameStream vne::DialogueFrame::operator()()
 {
-    return DialogueFrameStream(*this, "");
+    return DialogueFrameStream(*this, vne::Character(""));
 }
 
-vne::DialogueFrameStream vne::DialogueFrame::operator()(std::string name)
+vne::DialogueFrameStream vne::DialogueFrame::operator()(vne::Character character)
 {
-    return DialogueFrameStream(*this, name);
+    return DialogueFrameStream(*this, character);
 }

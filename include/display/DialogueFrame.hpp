@@ -12,6 +12,7 @@
 #include <MiraiProject/util/WindowManager.hpp>
 
 #include "display/DialogueFrameStream.hpp"
+#include "display/DialogueSkin.hpp"
 
 namespace vne
 {
@@ -19,36 +20,25 @@ namespace vne
 
     class DialogueFrame
     {
+    friend class DialogueSkin;
+
     public:
-        DialogueFrame(sf::Texture texture);
+        DialogueFrame(vne::DialogueSkin skin);
 
         sf::Sprite getSprite();
 
-        void setColor(sf::Color color);
-
-        void setPosition(sf::Vector2f position);
-
-        void setNamePosition(sf::Vector2f position);
-
-        void setName(sf::Text name);
-
-        void setName(std::string name);
-
-        void setTextPosition(sf::Vector2f position);
-
-        void setText(sf::Text text);
-
-        void setText(std::string text);
-
         sf::Text getName();
 
-        void changeDialogue(std::string name, std::string text);
+        sf::Text getText();
+
+        void changeDialogue(Character character, std::string text);
 
         DialogueFrameStream operator()();
 
-        DialogueFrameStream operator()(std::string name);
+        DialogueFrameStream operator()(Character character);
 
     private:
+        sf::Font font_;
         sf::Text text_;
         sf::Text name_;
         sf::Sprite sprite_;
