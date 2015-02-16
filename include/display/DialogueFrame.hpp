@@ -33,16 +33,15 @@ namespace vne
 
         void changeDialogue(Character character, std::string text);
 
-        DialogueFrameStream operator()();
-
-        DialogueFrameStream operator()(Character character);
+        DialogueFrameStream operator()(Character character = Character(""));
 
     private:
         sf::Font font_;
+
         sf::Text text_;
         sf::Text name_;
+        
         sf::Sprite sprite_;
-
     };
 }
 

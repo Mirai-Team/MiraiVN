@@ -1,7 +1,10 @@
 #include "display/DialogueFrame.hpp"
 #include "display/DialogueFrameStream.hpp"
 
-vne::DialogueFrame::DialogueFrame(vne::DialogueSkin dialogueSkin)
+vne::DialogueFrame::DialogueFrame(vne::DialogueSkin dialogueSkin) : font_ { },
+                                                                    text_ { },
+                                                                    name_ { },
+                                                                    sprite_ { }
 {
     vne::DialogueSkin::Skin skin = dialogueSkin.getSkin();
 
@@ -47,11 +50,6 @@ void vne::DialogueFrame::changeDialogue(vne::Character character, std::string te
     name_.setString(character.getName());
     name_.setColor(character.getColor());
     text_.setString(text);
-}
-
-vne::DialogueFrameStream vne::DialogueFrame::operator()()
-{
-    return DialogueFrameStream(*this, vne::Character(""));
 }
 
 vne::DialogueFrameStream vne::DialogueFrame::operator()(vne::Character character)
