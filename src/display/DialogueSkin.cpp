@@ -2,7 +2,10 @@
 
 #include <iostream>
 
-vne::DialogueSkin::DialogueSkin(sf::Texture texture, sf::Vector2f framePosition, std::string font, unsigned int fontSize, sf::Color textColor, sf::Vector2f namePosition, sf::Vector2f textPosition, bool relativePosition)
+vne::DialogueSkin::DialogueSkin(sf::Texture texture, sf::Vector2f framePosition, 
+                                std::string font, unsigned int fontSize, 
+                                sf::Color textColor, sf::Vector2f namePosition, 
+                                sf::Vector2f textPosition, bool relativePosition) : dialogueSkin_ { }
 {
     dialogueSkin_.sprite.setTexture(texture);
     dialogueSkin_.framePosition = framePosition;
@@ -13,7 +16,7 @@ vne::DialogueSkin::DialogueSkin(sf::Texture texture, sf::Vector2f framePosition,
     if(relativePosition)
     {
         dialogueSkin_.namePosition = framePosition + namePosition;
-        dialogueSkin_.textPosition = framePosition + textPosition;
+        dialogueSkin_.textPosition = framePosition + namePosition;
     }
     else
     {
@@ -22,7 +25,10 @@ vne::DialogueSkin::DialogueSkin(sf::Texture texture, sf::Vector2f framePosition,
     }
 }
 
-vne::DialogueSkin::DialogueSkin(sf::Sprite sprite, sf::Vector2f framePosition, std::string font, unsigned int fontSize, sf::Color textColor, sf::Vector2f namePosition, sf::Vector2f textPosition, bool relativePosition)
+vne::DialogueSkin::DialogueSkin(sf::Sprite sprite, sf::Vector2f framePosition, 
+                                std::string font, unsigned int fontSize, 
+                                sf::Color textColor, sf::Vector2f namePosition, 
+                                sf::Vector2f textPosition, bool relativePosition) : dialogueSkin_ { }
 {
     dialogueSkin_.sprite = sprite;
     dialogueSkin_.framePosition = framePosition;
