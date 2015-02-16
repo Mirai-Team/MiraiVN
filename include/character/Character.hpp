@@ -10,7 +10,7 @@ namespace vne
     class Character
     {
     public:
-        Character(std::string name, sf::Color color = sf::Color::White);
+        Character(std::string name, const sf::Color color = sf::Color::White);
 
         std::string getName();
         sf::Color getColor();
