@@ -42,15 +42,11 @@ int main()
     mp::MouseManager mouseManager;
 
     sf::Texture texture;
-    if (!texture.loadFromFile("frame.png"))
+    if (!texture.loadFromFile("resources/imgs/frame.png"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
-    sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
-        return EXIT_FAILURE;
-
-    mvn::DialogueSkin skin(sprite, sf::Vector2f(0.f, static_cast<float>(mainWindowManager.getVideomodeHeight()) -200.f), "arial.ttf", 20, sf::Color::White, sf::Vector2f(5.f, -22.f), sf::Vector2f(15.f, 20.f));
+    mvn::DialogueSkin skin(sprite, sf::Vector2f(0.f, static_cast<float>(mainWindowManager.getVideomodeHeight()) -200.f), "resources/fonts/UbuntuMono-R.ttf", 20, sf::Color::White, sf::Vector2f(5.f, -22.f), sf::Vector2f(15.f, 20.f));
     mvn::DialogueFrame mainDialogFrame(skin);
     mvn::DialogueManager dialogueManager(mainDialogFrame, 10, sf::seconds(.5f), false);
 

@@ -1,4 +1,4 @@
-project(VisualNovelEngine)
+project(MiraiVN)
 
 cmake_minimum_required(VERSION 2.8.9)
 
@@ -44,19 +44,19 @@ include(cmake/genrev.cmake)
 
 message("")
 
-message("* VisualNovelEngine           : ${revHash} ${revDate} (${revBranch} branch)")
-message("* VisualNovelEngine buildtype : ${CMAKE_BUILD_TYPE}")
+message("* MiraiVN                  : ${revHash} ${revDate} (${revBranch} branch)")
+message("* MiraiVN buildtype        : ${CMAKE_BUILD_TYPE}")
 
-if(mvn_WITH_WARNINGS)
-    message("* Show all warnings           : Yes (default)")
+if(MVN_WITH_WARNINGS)
+    message("* Show all warnings        : Yes (default)")
 else()
-    message("* Show all warnings           : No")
+    message("* Show all warnings        : No")
 endif()
 
-if(mvn_WITH_GIT)
-    message("* Use GIT revision hash       : Yes (default)")
+if(MVN_WITH_GIT)
+    message("* Use GIT revision hash    : Yes (default)")
 else()
-    message("* Use GIT revision hash       : No")
+    message("* Use GIT revision hash    : No")
 endif()
 
 message("")
