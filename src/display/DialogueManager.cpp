@@ -2,26 +2,42 @@
 
 using namespace std;
 
-vne::DialoguesManager::DialoguesManager(vne::DialogueFrame& dialogueFrame, int characterPerFrames, 
-                                        sf::Time pauseTime) :   queue_{ },
-                                                                dialogueFrame_{ dialogueFrame },
-                                                                characterSpeed_ { sf::seconds(1.f/static_cast<float>(characterPerFrames)) },
-                                                                pauseTime_ { pauseTime },
-                                                                deltaTime_ { sf::Time::Zero },
-                                                                i_ { 0 },
-                                                                output_ { "" }
+mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int characterPerSeconds, 
+                                        sf::Time pauseTime, bool autoMode) :    queue_{ },
+                                                                                dialogueFrame_{ dialogueFrame },
+                                                                                characterSpeed_ { sf::seconds(1.f/static_cast<float>(characterPerSeconds)) },
+                                                                                pauseTime_ { pauseTime },
+                                                                                deltaTime_ { sf::Time::Zero },
+                                                                                i_ { 0 },
+                                                                                output_ { "" },
+                                                                                mode_ { autoMode },
+                                                                                next_ { false },
+                                                                                onGoing_ { true },
+                                                                                enabled_ { true }
 {
 
 }
 
-void vne::DialoguesManager::operator()(sf::Time deltaTime)
+void mvn::DialogueManager::operator()(sf::Time deltaTime)
 {
-    deltaTime_ += deltaTime;
+    if(!onGoing_)
+        deltaTime_ = characterSpeed_;
+    else
+        deltaTime_ += deltaTime;
 
-    while(deltaTime_ > characterSpeed_ and queue_.size() != 0)
+    while(enabled_ and 
+         (deltaTime_ >= characterSpeed_ and queue_.size() != 0) and 
+         (onGoing_ or next_))
     {
         deltaTime_ -= characterSpeed_;
-        pair<vne::Character*, string> firstIn = queue_[0];
+
+        pair<mvn::Character*, string> firstIn = queue_[0];
+
+        if(next_)
+        {    
+            next_ = false;
+            onGoing_ = true;
+        }
 
         if(firstIn.second.length() > i_)
         {
@@ -31,15 +47,40 @@ void vne::DialoguesManager::operator()(sf::Time deltaTime)
         }
         else
         {
+            deltaTime_ = sf::Time::Zero;
             i_ = 0;
             output_ = "";
             queue_.erase(queue_.begin());
-            deltaTime_ -= sf::seconds(2.f);
+
+            if(!mode_)
+                onGoing_ = false;
+
+            if(mode_)
+                deltaTime_ -= pauseTime_;
         } 
     }
 }
 
-void vne::DialoguesManager::addDialogue(vne::Character* character, string dialogue)
+void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogue)
 {
     queue_.push_back(std::make_pair(character, dialogue));
+}
+
+void mvn::DialogueManager::next()
+{
+    next_ = true;
+}
+void mvn::DialogueManager::enable()
+{
+    enabled_ = true;
+}
+
+void mvn::DialogueManager::disable()
+{
+    enabled_ = false;
+}
+
+bool mvn::DialogueManager::isEnabled()
+{
+    return enabled_;
 }

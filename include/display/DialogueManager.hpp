@@ -10,17 +10,25 @@
 #include "character/Character.hpp"
 #include "display/DialogueFrame.hpp"
 
-namespace vne
+namespace mvn
 {
-    class DialoguesManager
+    class DialogueManager
     {
     public:
-        DialoguesManager(DialogueFrame& dialogueFrame, int characterPerFrames, 
-                         sf::Time pauseTime);
+        DialogueManager(DialogueFrame& dialogueFrame, int characterPerSeconds, 
+                         sf::Time pauseTime, bool autoMode = false);
 
         void operator()(sf::Time deltaTime);
 
         void addDialogue(Character *character, std::string dialogue);
+
+        void next();
+
+        void enable();
+
+        void disable();
+
+        bool isEnabled();
 
     private:
         std::vector<std::pair<Character*, std::string>> queue_;
@@ -36,6 +44,14 @@ namespace vne
         unsigned int i_;
 
         std::string output_;
+
+        bool mode_;
+
+        bool next_;
+
+        bool onGoing_;
+
+        bool enabled_;
     };
 }
 
