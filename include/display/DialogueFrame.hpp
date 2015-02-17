@@ -14,7 +14,7 @@
 #include "display/DialogueFrameStream.hpp"
 #include "display/DialogueSkin.hpp"
 
-namespace vne
+namespace mvn
 {
     class DialogueFrameStream;
 
@@ -23,7 +23,7 @@ namespace vne
     friend class DialogueSkin;
 
     public:
-        DialogueFrame(vne::DialogueSkin skin);
+        DialogueFrame(mvn::DialogueSkin skin);
 
         sf::Sprite getSprite();
 

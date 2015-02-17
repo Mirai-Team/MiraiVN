@@ -30,7 +30,7 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 # Find any 1.54.X or higher version of Boost.
 find_package(Boost 1.54.0 REQUIRED filesystem system thread)
 
-if(VNE_WITH_GIT)
+if(mvn_WITH_GIT)
     find_package(Git)
 endif()
 
@@ -47,13 +47,13 @@ message("")
 message("* VisualNovelEngine           : ${revHash} ${revDate} (${revBranch} branch)")
 message("* VisualNovelEngine buildtype : ${CMAKE_BUILD_TYPE}")
 
-if(VNE_WITH_WARNINGS)
+if(mvn_WITH_WARNINGS)
     message("* Show all warnings           : Yes (default)")
 else()
     message("* Show all warnings           : No")
 endif()
 
-if(VNE_WITH_GIT)
+if(mvn_WITH_GIT)
     message("* Use GIT revision hash       : Yes (default)")
 else()
     message("* Use GIT revision hash       : No")

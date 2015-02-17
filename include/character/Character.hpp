@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace vne
+namespace mvn
 {
     class Character
     {

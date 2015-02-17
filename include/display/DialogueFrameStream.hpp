@@ -10,7 +10,7 @@
 #include "character/Character.hpp"
 #include "display/DialogueFrame.hpp"
 
-namespace vne
+namespace mvn
 {
     class DialogueFrame;
 

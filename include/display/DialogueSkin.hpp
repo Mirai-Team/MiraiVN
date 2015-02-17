@@ -7,7 +7,7 @@
 
 #include <MiraiProject/util/WindowManager.hpp>
 
-namespace vne
+namespace mvn
 {
     class DialogueSkin
     {

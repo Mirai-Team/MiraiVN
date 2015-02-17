@@ -3,7 +3,7 @@ if(NOT BUILDDIR)
     set(BUILDDIR ${CMAKE_BINARY_DIR})
 endif()
 
-if(VNE_WITH_GIT)
+if(mvn_WITH_GIT)
     if(GIT_EXEC)
         execute_process(
             COMMAND "${GIT_EXEC}" describe --tags --dirty=+ --abbrev=4

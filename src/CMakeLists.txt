@@ -1,10 +1,21 @@
+file(GLOB_RECURSE sources_character
+    ${CMAKE_CURRENT_SOURCE_DIR}/character/* 
+    ${CMAKE_SOURCE_DIR}/include/character/*
+)
 file(GLOB_RECURSE sources_display
     ${CMAKE_CURRENT_SOURCE_DIR}/display/* 
     ${CMAKE_SOURCE_DIR}/include/display/*
 )
 
+file(GLOB_RECURSE sources_main
+    ${CMAKE_CURRENT_SOURCE_DIR}/Main/* 
+    ${CMAKE_SOURCE_DIR}/include/Main/*
+)
+
 set(core_sources
+    ${sources_character}
     ${sources_display}
+    ${sources_main}
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
@@ -19,13 +30,15 @@ link_directories(${CMAKE_SOURCE_DIR}/dep/bin/)
 # Include dependence headers.
 include_directories(${CMAKE_SOURCE_DIR}/dep/)
 
-set(CORE_NAME VNE)
+set(CORE_NAME mvn)
 
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+#set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
-add_library(
+#add_library(
+add_executable(
     ${CORE_NAME}
-    SHARED
+    #SHARED
     ${core_sources}
 )
 

@@ -9,7 +9,7 @@ message(STATUS "Found GCC ${CMAKE_CXX_COMPILER_VERSION}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 message(STATUS "GCC: Enabled c++11 support")
 
-if(VNE_WITH_WARNINGS)
+if(mvn_WITH_WARNINGS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -pedantic-errors -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -Wfloat-equal -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wconversion -Wshadow -Wredundant-decls -Wdouble-promotion -Winit-self -Wswitch-default -Wundef -Wlogical-op -Winline -Weffc++")
     message(STATUS "GCC: Enabled warnings")
 endif()

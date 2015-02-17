@@ -1,12 +1,12 @@
 #include "display/DialogueFrame.hpp"
 #include "display/DialogueFrameStream.hpp"
 
-vne::DialogueFrame::DialogueFrame(vne::DialogueSkin dialogueSkin) : font_ { },
+mvn::DialogueFrame::DialogueFrame(mvn::DialogueSkin dialogueSkin) : font_ { },
                                                                     text_ { },
                                                                     name_ { },
                                                                     sprite_ { }
 {
-    vne::DialogueSkin::Skin skin = dialogueSkin.getSkin();
+    mvn::DialogueSkin::Skin skin = dialogueSkin.getSkin();
 
     sprite_ = skin.sprite;
     sprite_.setPosition(skin.framePosition);
@@ -30,29 +30,29 @@ vne::DialogueFrame::DialogueFrame(vne::DialogueSkin dialogueSkin) : font_ { },
     text_.setString("");
 }
 
-sf::Sprite vne::DialogueFrame::getSprite()
+sf::Sprite mvn::DialogueFrame::getSprite()
 {
     return sprite_;
 }
 
-sf::Text vne::DialogueFrame::getName()
+sf::Text mvn::DialogueFrame::getName()
 {
     return name_;
 }
 
-sf::Text vne::DialogueFrame::getText()
+sf::Text mvn::DialogueFrame::getText()
 {
     return text_;
 }
 
-void vne::DialogueFrame::changeDialogue(vne::Character character, std::string text)
+void mvn::DialogueFrame::changeDialogue(mvn::Character character, std::string text)
 {
     name_.setString(character.getName());
     name_.setColor(character.getColor());
     text_.setString(text);
 }
 
-vne::DialogueFrameStream vne::DialogueFrame::operator()(vne::Character character)
+mvn::DialogueFrameStream mvn::DialogueFrame::operator()(mvn::Character character)
 {
     return DialogueFrameStream(*this, character);
 }
