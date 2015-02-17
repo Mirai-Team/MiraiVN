@@ -26,7 +26,7 @@
 
 using namespace std;
 
-mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int characterPerSeconds, 
+mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int characterPerSeconds,
                                         sf::Time pauseTime, bool autoMode) :    queue_{ },
                                                                                 dialogueFrame_{ dialogueFrame },
                                                                                 characterSpeed_ { sf::seconds(1.f/static_cast<float>(characterPerSeconds)) },
@@ -44,10 +44,10 @@ mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int cha
 
 void mvn::DialogueManager::operator()(sf::Time deltaTime)
 {
-    if(!onGoing_)
-        deltaTime_ = characterSpeed_;
-    else
+    if(onGoing_)
         deltaTime_ += deltaTime;
+    else
+        deltaTime_ = characterSpeed_;
 
     while(enabled_ and 
          (deltaTime_ >= characterSpeed_ and queue_.size() != 0) and 
@@ -76,12 +76,11 @@ void mvn::DialogueManager::operator()(sf::Time deltaTime)
             output_ = "";
             queue_.erase(queue_.begin());
 
-            if(!mode_)
-                onGoing_ = false;
-
             if(mode_)
                 deltaTime_ -= pauseTime_;
-        } 
+            else
+                onGoing_ = false;
+        }
     }
 }
 
@@ -92,7 +91,22 @@ void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogu
 
 void mvn::DialogueManager::next()
 {
-    next_ = true;
+    mode_ = false;
+
+    if(onGoing_)
+    {
+        pair<mvn::Character*, string> firstIn = queue_[0];
+        
+        dialogueFrame_(*firstIn.first) << firstIn.second;
+
+        deltaTime_ = sf::Time::Zero;
+        i_ = 0;
+        output_ = "";
+        queue_.erase(queue_.begin());
+        onGoing_ = false;
+    }
+    else
+        next_ = true;
 }
 void mvn::DialogueManager::enable()
 {

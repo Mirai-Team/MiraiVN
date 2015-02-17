@@ -75,7 +75,7 @@ int main()
 
     mouseManager.addBinding("next", sf::Mouse::Left, [&dialogueManager] { 
         dialogueManager.next(); 
-    });
+    }, mp::Binding::Mode::onPress);
 
     while (window.isOpen())
     {
