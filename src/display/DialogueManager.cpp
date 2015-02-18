@@ -91,6 +91,9 @@ void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogu
 
 void mvn::DialogueManager::next()
 {
+    if(queue_.size() == 0)
+        return;
+    
     mode_ = false;
 
     if(onGoing_)
