@@ -27,17 +27,19 @@
 using namespace std;
 
 mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int characterPerSeconds,
-                                        sf::Time pauseTime, bool autoMode) :    queue_{ },
-                                                                                dialogueFrame_{ dialogueFrame },
-                                                                                characterSpeed_ { sf::seconds(1.f/static_cast<float>(characterPerSeconds)) },
-                                                                                pauseTime_ { pauseTime },
-                                                                                deltaTime_ { sf::Time::Zero },
-                                                                                i_ { 0 },
-                                                                                output_ { "" },
-                                                                                mode_ { autoMode },
-                                                                                next_ { false },
-                                                                                onGoing_ { true },
-                                                                                enabled_ { true }
+                                        sf::Time pauseTime, bool autoMode,
+                                        float ratio) :  queue_{ },
+                                                        dialogueFrame_{ dialogueFrame },
+                                                        characterSpeed_ { sf::seconds(1.f/static_cast<float>(characterPerSeconds)) },
+                                                        pauseTime_ { pauseTime },
+                                                        deltaTime_ { sf::Time::Zero },
+                                                        i_ { 0 },
+                                                        ratio_ { ratio },
+                                                        output_ { "" },
+                                                        mode_ { autoMode },
+                                                        next_ { false },
+                                                        onGoing_ { true },
+                                                        enabled_ { true }
 {
 
 }
@@ -77,7 +79,13 @@ void mvn::DialogueManager::operator()(sf::Time deltaTime)
             queue_.erase(queue_.begin());
 
             if(mode_)
-                deltaTime_ -= pauseTime_;
+            {
+                if(pauseTime_ == sf::Time::Zero)
+                    deltaTime_ -= sf::seconds(ratio_ * characterSpeed_.asSeconds() * static_cast<float>(firstIn.second.length()));
+                else
+                    deltaTime_ -= pauseTime_;
+            }
+                
             else
                 onGoing_ = false;
         }
@@ -93,7 +101,7 @@ void mvn::DialogueManager::next()
 {
     if(queue_.size() == 0)
         return;
-    
+
     mode_ = false;
 
     if(onGoing_)
@@ -110,6 +118,14 @@ void mvn::DialogueManager::next()
     }
     else
         next_ = true;
+}
+
+void mvn::DialogueManager::setRatio(float ratio)
+{
+    if(ratio <= 0)
+        ratio_ = 1;
+
+    ratio_ = ratio;
 }
 void mvn::DialogueManager::enable()
 {

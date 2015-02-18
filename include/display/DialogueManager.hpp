@@ -40,13 +40,15 @@ namespace mvn
     {
     public:
         DialogueManager(DialogueFrame& dialogueFrame, int characterPerSeconds, 
-                         sf::Time pauseTime, bool autoMode = false);
+                         sf::Time pauseTime, bool autoMode = false, float ratio = 1.f);
 
         void operator()(sf::Time deltaTime);
 
         void addDialogue(Character *character, std::string dialogue);
 
         void next();
+
+        void setRatio(float ratio);
 
         void enable();
 
@@ -66,6 +68,8 @@ namespace mvn
         sf::Time deltaTime_;
 
         unsigned int i_;
+
+        float ratio_;
 
         std::string output_;
 
