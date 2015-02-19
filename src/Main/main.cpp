@@ -96,9 +96,11 @@ int main()
                         break;
                     case sf::Event::GainedFocus:
                         dialogueManager.enable();
+                        mouseManager.enable();
                         break;
                     case sf::Event::LostFocus:
                         dialogueManager.disable();
+                        mouseManager.disable();
                         break;
                     default:
                         break;

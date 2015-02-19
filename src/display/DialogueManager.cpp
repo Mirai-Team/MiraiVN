@@ -46,13 +46,15 @@ mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int cha
 
 void mvn::DialogueManager::operator()(sf::Time deltaTime)
 {
+    if(!enabled_)
+        return;
+
     if(onGoing_)
         deltaTime_ += deltaTime;
     else
         deltaTime_ = characterSpeed_;
 
-    while(enabled_ and 
-         (deltaTime_ >= characterSpeed_ and queue_.size() != 0) and 
+    while((deltaTime_ >= characterSpeed_ and queue_.size() != 0) and 
          (onGoing_ or next_))
     {
         deltaTime_ -= characterSpeed_;
