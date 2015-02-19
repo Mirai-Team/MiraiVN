@@ -34,15 +34,39 @@
 #include "character/Character.hpp"
 #include "display/DialogueFrame.hpp"
 
+/** 
+ * @file DialogueFrameStream.hpp
+ * @brief This file define DialogueFrameStream class.
+ */
+
 namespace mvn
 {
+    // forward declaration.
     class DialogueFrame;
 
+    /** @class DialogueFrameStream */
     class DialogueFrameStream : public std::ostringstream
     {
     public:
+        /**
+         * @brief Constructor
+         * 
+         * @param dialogueFrame : A reference to a DialogueFrame.
+         * @param character : A character.
+         */
         DialogueFrameStream(DialogueFrame& dialogueFrame, Character character);
+
+        /**
+         * @brief Copy constructor
+         * 
+         * @param ls : A DialogueFrameStream.
+         */
         DialogueFrameStream(const DialogueFrameStream& ls);
+
+        /**
+         * @brief Destructor
+         * @details Call DialogueFrame::changeDialogue.
+         */
         ~DialogueFrameStream();
 
     private:

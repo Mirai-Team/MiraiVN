@@ -34,26 +34,79 @@
 #include "character/Character.hpp"
 #include "display/DialogueFrame.hpp"
 
+/** 
+ * @file DialogueManager.hpp
+ * @brief This file define DialogueManager class.
+ */
+ 
 namespace mvn
 {
+    /**
+     * @class DialogueManager
+     * @brief Manage the dialogues.
+     */
     class DialogueManager
     {
     public:
+        /**
+         * @brief Constructor
+         * 
+         * @param dialogueFrame : A DialogueFrame where the dialogues are written.
+         * @param characterPerSeconds : Number of characters written per seconds.
+         * @param pauseTime : In auto mode pause between each dialogue.
+         * @param autoMode : If true, active autoMode.
+         * @param ratio : Modifier for user in order to change pauseTime in autoMode.
+         */
         DialogueManager(DialogueFrame& dialogueFrame, int characterPerSeconds, 
-                         sf::Time pauseTime, bool autoMode = false, float ratio = 1.f);
+                         sf::Time pauseTime = sf::Time::Zero, bool autoMode = false, float ratio = 1.f);
 
+        /**
+         * @brief Update the dialogueFrame.
+         * @details If it's in autoMode display dialogue one after another. 
+         * If pauseTime is set to Zero, Calcul time between each dialogue. 
+         * Change ratio in order to change pause duration.
+         * 
+         * @param deltaTime : Time per frame.
+         */
         void operator()(sf::Time deltaTime);
 
+        /**
+         * @brief Add a dialogue.
+         * @details Add a dialogue in the end of the queue.
+         * 
+         * @param character : Character who speaks.
+         * @param dialogue : Text says by the character.
+         */
         void addDialogue(Character *character, std::string dialogue);
 
+        /**
+         * @brief Force the update.
+         * @details If autoMode is true, displays the whole current dialogue and disable autoMode.
+         * Else display the next dialogue.
+         */
         void next();
 
+        /**
+         * @brief Change the Ratio.
+         * 
+         * @param ratio : a float >= 0
+         */
         void setRatio(float ratio);
 
+        /**
+         * @brief Enable DialogueManager.
+         */
         void enable();
 
+        /**
+         * @brief Disable DialogueManager.
+         */
         void disable();
 
+        /**
+         * @brief Return the state of the instance.
+         * @return True if the instance is enabled.
+         */
         bool isEnabled();
 
     private:

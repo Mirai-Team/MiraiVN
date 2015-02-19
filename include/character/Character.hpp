@@ -29,20 +29,53 @@
 
 #include <SFML/Graphics.hpp>
 
+/** 
+ * @file Character.hpp
+ * @brief This file define Character class.
+ */
+ 
 namespace mvn
 {
+    /** \class Character */
     class Character
     {
     public:
+        /**
+         * @brief Constructor
+         * 
+         * @param name : character's name.
+         * @param color : name's color.
+         */
         Character(std::string name, const sf::Color color = sf::Color::White);
 
+        virtual ~Character();
+
+        /**
+         * @brief Give character's name
+         * @return A string which contains character's name.
+         */
         std::string getName();
+
+        /**
+         * @brief Give name's color
+         * @return A sf::Color
+         */
         sf::Color getColor();
 
+        /**
+         * @brief Change character's name
+         * 
+         * @param name : new character's name.
+         */
         void setName(std::string name);
+
+        /**
+         * @brief Change character name color.
+         * 
+         * @param color : the new color.
+         */
         void setColor(sf::Color color);
 
-        virtual ~Character();
     private:
         std::string name_;
         sf::Color color_;

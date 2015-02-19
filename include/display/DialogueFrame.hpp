@@ -38,25 +38,66 @@
 #include "display/DialogueFrameStream.hpp"
 #include "display/DialogueSkin.hpp"
 
+/** 
+ * @file DialogueFrame.hpp
+ * @brief This file define DialogueFrame class.
+ */
+
 namespace mvn
 {
+    //forward declaration.
     class DialogueFrameStream;
 
+    /**
+     * @class DialogueFrame
+     */
     class DialogueFrame
     {
     friend class DialogueSkin;
 
     public:
+        /**
+         * @brief Constructor
+         * @details Genere a dialogue frame with DialogueSkin parameter.
+         * 
+         * @param skin : A DialogueSkin.
+         */
         DialogueFrame(mvn::DialogueSkin skin);
 
+        /**
+         * @brief Return the sprite (background of the frame)
+         * @return A sf::Sprite which is the background frame.
+         */
         sf::Sprite getSprite();
 
+        /**
+         * @brief Return the name.
+         * @return A sf::Text.
+         */
         sf::Text getName();
 
+        /**
+         * @brief Return the text
+         * @return [description]
+         */
         sf::Text getText();
 
+        /**
+         * @brief Change the dialogue
+         * @details Set name_ string value to character.getName(), set name_ color to character.getColor()
+         * and set text_ string value to text.
+         *  
+         * @param character : A Character
+         * @param text [description]
+         */
         void changeDialogue(Character character, std::string text);
 
+        /**
+         * @brief Call DialogueFrameStream constructor in order to call changeDialogue
+         * @details Allow you to use << operator in order to changeDialogue.
+         * @param character : A character, by default it's a character with empty name and sf::Color::White.
+         * @return Return a stream.
+         */
         DialogueFrameStream operator()(Character character = Character(""));
 
     private:

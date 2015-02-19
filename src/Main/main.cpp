@@ -66,7 +66,7 @@ int main()
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
-    mvn::DialogueSkin skin(sprite, sf::Vector2f(0.f, static_cast<float>(windowManager.getVideomodeHeight()) -200.f), "resources/fonts/UbuntuMono-R.ttf", 20, sf::Color::White, sf::Vector2f(5.f, -22.f), sf::Vector2f(15.f, 20.f));
+    mvn::DialogueSkin skin(sprite, sf::Vector2f(0.f, static_cast<float>(windowManager.getVideomodeHeight()) -200.f), "resources/fonts/UbuntuMono-R.ttf", 20, sf::Vector2f(5.f, -22.f), sf::Vector2f(15.f, 20.f), sf::Color::White);
     mvn::DialogueFrame dialogFrame(skin);
     mvn::DialogueManager dialogueManager(dialogFrame, 50, sf::Time::Zero, true);
 

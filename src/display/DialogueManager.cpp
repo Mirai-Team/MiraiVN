@@ -22,6 +22,8 @@
 //
 ////////////////////////////////////////////////////////////
 
+#include <cmath>
+
 #include "display/DialogueManager.hpp"
 
 using namespace std;
@@ -83,7 +85,7 @@ void mvn::DialogueManager::operator()(sf::Time deltaTime)
             if(mode_)
             {
                 if(pauseTime_ == sf::Time::Zero)
-                    deltaTime_ -= sf::seconds(ratio_ * characterSpeed_.asSeconds() * static_cast<float>(firstIn.second.length()));
+                    deltaTime_ -= sf::seconds(ratio_ * characterSpeed_.asSeconds() * static_cast<float>(pow(firstIn.second.length(), 1.2f)));
                 else
                     deltaTime_ -= pauseTime_;
             }
