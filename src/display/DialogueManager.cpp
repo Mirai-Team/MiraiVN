@@ -102,23 +102,26 @@ void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogu
 
 void mvn::DialogueManager::next()
 {
-    if(queue_.size() == 0)
+    if(queue_.size() == 0 or next_)
         return;
-
-    mode_ = false;
 
     if(onGoing_)
     {
-        pair<mvn::Character*, string> firstIn = queue_[0];
-        
-        dialogueFrame_(*firstIn.first) << firstIn.second;
+        mode_ = false;
+        onGoing_ = false;
+
+        if(i_ != 0)
+        {
+            pair<mvn::Character*, string> firstIn = queue_[0];
+            dialogueFrame_(*firstIn.first) << firstIn.second;
+            queue_.erase(queue_.begin());
+        }
+        else
+            next_ = true;
 
         deltaTime_ = sf::Time::Zero;
         i_ = 0;
         output_ = "";
-
-        queue_.erase(queue_.begin());
-        onGoing_ = false;
     }
     else
         next_ = true;
