@@ -89,7 +89,6 @@ void mvn::DialogueManager::operator()(sf::Time deltaTime)
                 else
                     deltaTime_ -= pauseTime_;
             }
-                
             else
                 onGoing_ = false;
         }
@@ -117,11 +116,17 @@ void mvn::DialogueManager::next()
         deltaTime_ = sf::Time::Zero;
         i_ = 0;
         output_ = "";
+
         queue_.erase(queue_.begin());
         onGoing_ = false;
     }
     else
         next_ = true;
+}
+
+void mvn::DialogueManager::enabledAutoMode()
+{
+    mode_ = true;
 }
 
 void mvn::DialogueManager::setRatio(float ratio)

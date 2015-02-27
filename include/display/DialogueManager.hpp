@@ -87,6 +87,11 @@ namespace mvn
         void next();
 
         /**
+         * @brief enable auto mode.
+         */
+        void enabledAutoMode();
+
+        /**
          * @brief Change the Ratio.
          * 
          * @param ratio : a float >= 0
