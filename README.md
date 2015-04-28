@@ -22,7 +22,6 @@ You can get the current development version from the git repository [on Github](
 + Platform: Linux, Windows
 + Boost ≥ 1.54.0 (Modules : system, filesystem and thread)
 + SFML ≥ 2.2
-+ MiraiProject ≥ v0.2-43-g9f72 2015-03-11 19:20:23 +0100 (master branch)
 + CMake ≥ 2.8.11.2 / 2.8.9 (Windows / Linux)
 + Compiler which supports c++11
 + GCC ≥ 4.8.1 or Clang ≥ 3.3
