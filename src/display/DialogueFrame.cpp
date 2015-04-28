@@ -74,19 +74,6 @@ void mvn::DialogueFrame::changeDialogue(mvn::Character character, std::string te
     name_.setString(character.getName());
     name_.setColor(character.getColor());
     text_.setString(text);
-    for(unsigned int i=0;i<text_.getString().getSize();i++)
-    {
-        if(text_.findCharacterPos(i).x + 50 > sprite_.getGlobalBounds().left+sprite_.getGlobalBounds().width && text_.getString()[i] != '\n')
-        {
-            while(text_.getString()[i] != ' ')
-                --i;
-
-            sf::String str1 = text_.getString().toWideString().substr(0,i);
-            str1 += "\n";
-            str1 += text_.getString().toWideString().substr(i+1);
-            text_.setString(str1);
-        }
-    }
 }
 
 mvn::DialogueFrameStream mvn::DialogueFrame::operator()(mvn::Character character)

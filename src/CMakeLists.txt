@@ -38,7 +38,6 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 #add_library(
 add_executable(
     ${CORE_NAME}
-    #SHARED
     ${core_sources}
 )
 

@@ -56,7 +56,7 @@ void mvn::DialogueManager::operator()(sf::Time deltaTime)
     else
         deltaTime_ = characterSpeed_;
 
-    while((deltaTime_ >= characterSpeed_ and queue_.size() != 0) and 
+    while((deltaTime_ >= characterSpeed_ and queue_.size()) and 
          (onGoing_ or next_))
     {
         deltaTime_ -= characterSpeed_;
@@ -90,13 +90,41 @@ void mvn::DialogueManager::operator()(sf::Time deltaTime)
                     deltaTime_ -= pauseTime_;
             }
             else
+            {
                 onGoing_ = false;
+            }
         }
     }
 }
 
 void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogue)
 {
+    sf::String str(dialogue);
+
+    float xPos = 0;
+
+    for (unsigned short i = 0; i < dialogue.length(); i++)
+    {
+        const sf::Glyph& glyph = dialogueFrame_.getText().getFont()->getGlyph(dialogue[i], dialogueFrame_.getText().getCharacterSize(), false);
+
+        if (xPos + 2 * static_cast<float>(glyph.textureRect.width) >= dialogueFrame_.getSprite().getGlobalBounds().left + dialogueFrame_.getSprite().getGlobalBounds().width)
+        {
+            xPos = 0;
+
+            while(dialogue[i] != ' ')
+                --i;
+
+            sf::String str1 = str.toWideString().substr(0,i);
+            str1 += "\n";
+            str1 += str.toWideString().substr(i+1);
+            str = str1;
+        }
+
+        xPos += glyph.advance;
+    }
+
+    dialogue = str.toAnsiString();
+
     queue_.push_back(std::make_pair(character, dialogue));
 }
 
@@ -124,7 +152,9 @@ void mvn::DialogueManager::next()
         output_ = "";
     }
     else
+    {
         next_ = true;
+    }
 }
 
 void mvn::DialogueManager::enabledAutoMode()
