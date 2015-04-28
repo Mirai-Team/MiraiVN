@@ -19,7 +19,7 @@ You can get the current development version from the git repository [on Github](
 
 ## Requirements
 
-+ Platform: Linux, Windows or Mac
++ Platform: Linux, Windows
 + Boost ≥ 1.54.0 (Modules : system, filesystem and thread)
 + SFML ≥ 2.2
 + MiraiProject ≥ v0.2-43-g9f72 2015-03-11 19:20:23 +0100 (master branch)
