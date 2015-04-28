@@ -22,8 +22,6 @@
 //
 ////////////////////////////////////////////////////////////
 
-#include <iostream>
-
 #include <SFML/Graphics.hpp>
 
 #include <MiraiProject/util/WindowManager.hpp>
@@ -35,10 +33,9 @@
 #include "display/DialogueManager.hpp"
 
 using namespace std;
-//using namespace mvn;
 
 const sf::Time TimePerFrame = sf::seconds(1.f/60.f);
-const sf::Time letterSpeed = sf::seconds(1.f/10.f);
+
 int main()
 {
     sf::Clock clock;
@@ -56,8 +53,8 @@ int main()
     windowManager.drawBorders();
     windowManager.create();
 
-    mvn::Character *lomadriel = new mvn::Character("Lomadriel", sf::Color::Red);
-    mvn::Character *enerto = new mvn::Character("Enerto", sf::Color::Green);
+    mvn::Character lomadriel("Lomadriel", sf::Color::Red);
+    mvn::Character enerto("Enerto", sf::Color::Green);
 
     mp::MouseManager mouseManager;
 
@@ -70,8 +67,8 @@ int main()
     mvn::DialogueFrame dialogFrame(skin);
     mvn::DialogueManager dialogueManager(dialogFrame, 50, sf::Time::Zero, true);
 
-    dialogueManager.addDialogue(lomadriel, "Ac ne quis a nobis hoc ita dici forte miretur, quod alia quaedam in hoc facultas sit ingeni, neque haec dicendi ratio aut disciplina, ne nos quidem huic uni studio penitus umquam dediti fuimus. Etenim omnes artes, quae ad humanitatem pertinent, habent quoddam commune vinculum, et quasi cognatione quadam inter se continentur.");
-    dialogueManager.addDialogue(enerto, "Amor progredi ob habuit amicos contra Coriolano Coriolanus Numne cum num debuerunt ob si ferre ferre si num contra contra amicos si debuerunt debuerunt num patriam Coriolanus amor debuerunt cum videamus debuerunt iuvare si Coriolanus amicos debuerunt videamus debuerunt primum amici Coriolano id regnum primum arma debeat amicos debeat Maelium rem adpetentem debeat ob amici amor patriam in amicos amicitia debuerunt illi in debuerunt Vecellinum Coriolano Coriolanus amicos regnum Numne arma illi primum cum habuit placet in regnum Coriolano illi num num ferre primum num debeat debeat debeat illi regnum illi patriam amicos Maelium ferre in illi iuvare Vecellinum habuit.");
+    dialogueManager.addDialogue(&lomadriel, "Ac ne quis a nobis hoc ita dici forte miretur, quod alia quaedam in hoc facultas sit ingeni, neque haec dicendi ratio aut disciplina, ne nos quidem huic uni studio penitus umquam dediti fuimus. Etenim omnes artes, quae ad humanitatem pertinent, habent quoddam commune vinculum, et quasi cognatione quadam inter se continentur.");
+    dialogueManager.addDialogue(&enerto, "Amor progredi ob habuit amicos contra Coriolano Coriolanus Numne cum num debuerunt ob si ferre ferre si num contra contra amicos si debuerunt debuerunt num patriam Coriolanus amor debuerunt cum videamus debuerunt iuvare si Coriolanus amicos debuerunt videamus debuerunt primum amici Coriolano id regnum primum arma debeat amicos debeat Maelium rem adpetentem debeat ob amici amor patriam in amicos amicitia debuerunt illi in debuerunt Vecellinum Coriolano Coriolanus amicos regnum Numne arma illi primum cum habuit placet in regnum Coriolano illi num num ferre primum num debeat debeat debeat illi regnum illi patriam amicos Maelium ferre in illi iuvare Vecellinum habuit.");
 
     mouseManager.addBinding("next", sf::Mouse::Left, [&dialogueManager] { 
         dialogueManager.next(); 

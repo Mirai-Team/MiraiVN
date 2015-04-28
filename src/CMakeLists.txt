@@ -25,15 +25,14 @@ include_directories(
     SYSTEM ${Boost_INCLUDE_DIRS}
 )
 
-link_directories(${CMAKE_SOURCE_DIR}/dep/bin/)
+link_directories(${CMAKE_BINARY_DIR}/bin/)
 
 # Include dependence headers.
-include_directories(${CMAKE_SOURCE_DIR}/dep/)
+include_directories(${CMAKE_SOURCE_DIR}/dep/MiraiProject/include/)
 
 set(CORE_NAME miraiVN)
 
-#set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/mvn)
 
 #add_library(
 add_executable(
@@ -45,20 +44,7 @@ target_link_libraries(
     ${CORE_NAME}
     ${SFML_LIBRARIES}
     ${Boost_LIBRARIES}
+    MiraiProject
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    # Link Mirai Project debug.
-    target_link_libraries(
-        ${CORE_NAME}
-        MiraiProject-d
-    )
-else()
-    # Link Mirai Project release.
-    target_link_libraries(
-        ${CORE_NAME}
-        MiraiProject
-    )
-endif()
-
-file(COPY ${CMAKE_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/bin/resources/)
+file(COPY ${CMAKE_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/bin/mvn/resources/)

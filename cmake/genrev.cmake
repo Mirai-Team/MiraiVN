@@ -1,9 +1,10 @@
-if(NOT BUILDDIR)
-    set(GIT_EXEC ${GIT_EXECUTABLE})
-    set(BUILDDIR ${CMAKE_BINARY_DIR})
-endif()
+set(GIT_EXEC ${GIT_EXECUTABLE})
 
-if(mvn_WITH_GIT)
+if(NOT MVN_WITH_GIT)
+    set(revDate "1970-01-01 00:00:00 +0000")
+    set(revHash "unknown")
+    set(revBranch "unknown")
+else()
     if(GIT_EXEC)
         execute_process(
             COMMAND "${GIT_EXEC}" describe --tags --dirty=+ --abbrev=4
@@ -27,8 +28,4 @@ if(mvn_WITH_GIT)
             ERROR_QUIET
         )
     endif()
-else()
-    set(revDate "1970-01-01 00:00:00 +0000")
-    set(revHash "unknown")
-    set(revBranch "unknown")
 endif()

@@ -30,7 +30,7 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 # Find any 1.54.X or higher version of Boost.
 find_package(Boost 1.54.0 REQUIRED filesystem system thread)
 
-if(mvn_WITH_GIT)
+if(MVN_WITH_GIT)
     find_package(Git)
 endif()
 
@@ -60,6 +60,8 @@ else()
 endif()
 
 message("")
+
+add_subdirectory(dep)
 
 # Add subdirectories to the build.
 add_subdirectory(src)

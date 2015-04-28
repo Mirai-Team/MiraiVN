@@ -125,7 +125,7 @@ namespace mvn
 
         sf::Time deltaTime_;
 
-        unsigned int i_;
+        unsigned int currentCharacter_;
 
         float ratio_;
 

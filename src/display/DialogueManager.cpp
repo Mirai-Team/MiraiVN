@@ -32,10 +32,10 @@ mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int cha
                                         sf::Time pauseTime, bool autoMode,
                                         float ratio) :  queue_{ },
                                                         dialogueFrame_{ dialogueFrame },
-                                                        characterSpeed_ { sf::seconds(1.f/static_cast<float>(characterPerSeconds)) },
+                                                        characterSpeed_ { sf::seconds(1.f / static_cast<float>(characterPerSeconds)) },
                                                         pauseTime_ { pauseTime },
                                                         deltaTime_ { sf::Time::Zero },
-                                                        i_ { 0 },
+                                                        currentCharacter_ { 0 },
                                                         ratio_ { ratio },
                                                         output_ { "" },
                                                         mode_ { autoMode },
@@ -48,43 +48,44 @@ mvn::DialogueManager::DialogueManager(mvn::DialogueFrame& dialogueFrame, int cha
 
 void mvn::DialogueManager::operator()(sf::Time deltaTime)
 {
-    if(!enabled_)
+    if (!enabled_)
         return;
 
-    if(onGoing_)
+    if (onGoing_)
         deltaTime_ += deltaTime;
     else
         deltaTime_ = characterSpeed_;
 
-    while((deltaTime_ >= characterSpeed_ and queue_.size()) and 
-         (onGoing_ or next_))
+    while ( (deltaTime_ >= characterSpeed_ and queue_.size()) and 
+            (onGoing_ or next_)
+          )
     {
         deltaTime_ -= characterSpeed_;
 
         pair<mvn::Character*, string> firstIn = queue_[0];
 
-        if(next_)
+        if (next_)
         {    
             next_ = false;
             onGoing_ = true;
         }
 
-        if(firstIn.second.length() > i_)
+        if (firstIn.second.length() > currentCharacter_)
         {
-            output_ += firstIn.second[i_];
+            output_ += firstIn.second[currentCharacter_];
             dialogueFrame_(*firstIn.first) << output_;
-            i_++;
+            currentCharacter_++;
         }
         else
         {
             deltaTime_ = sf::Time::Zero;
-            i_ = 0;
+            currentCharacter_ = 0;
             output_ = "";
             queue_.erase(queue_.begin());
 
-            if(mode_)
+            if (mode_)
             {
-                if(pauseTime_ == sf::Time::Zero)
+                if (pauseTime_ == sf::Time::Zero)
                     deltaTime_ -= sf::seconds(ratio_ * characterSpeed_.asSeconds() * static_cast<float>(pow(firstIn.second.length(), 1.2f)));
                 else
                     deltaTime_ -= pauseTime_;
@@ -101,17 +102,17 @@ void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogu
 {
     sf::String str(dialogue);
 
-    float xPos = 0;
+    float x = 0;
 
     for (unsigned short i = 0; i < dialogue.length(); i++)
     {
         const sf::Glyph& glyph = dialogueFrame_.getText().getFont()->getGlyph(dialogue[i], dialogueFrame_.getText().getCharacterSize(), false);
 
-        if (xPos + 2 * static_cast<float>(glyph.textureRect.width) >= dialogueFrame_.getSprite().getGlobalBounds().left + dialogueFrame_.getSprite().getGlobalBounds().width)
+        if (x + 2 * static_cast<float>(glyph.textureRect.width) >= dialogueFrame_.getSprite().getGlobalBounds().left + dialogueFrame_.getSprite().getGlobalBounds().width)
         {
-            xPos = 0;
+            x = 0;
 
-            while(dialogue[i] != ' ')
+            while (dialogue[i] != ' ')
                 --i;
 
             sf::String str1 = str.toWideString().substr(0,i);
@@ -120,7 +121,7 @@ void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogu
             str = str1;
         }
 
-        xPos += glyph.advance;
+        x += glyph.advance;
     }
 
     dialogue = str.toAnsiString();
@@ -130,25 +131,27 @@ void mvn::DialogueManager::addDialogue(mvn::Character* character, string dialogu
 
 void mvn::DialogueManager::next()
 {
-    if(queue_.size() == 0 or next_)
+    if (!queue_.size() or next_)
         return;
 
-    if(onGoing_)
+    if (onGoing_)
     {
         mode_ = false;
         onGoing_ = false;
 
-        if(i_ != 0)
+        if (currentCharacter_ != 0)
         {
             pair<mvn::Character*, string> firstIn = queue_[0];
             dialogueFrame_(*firstIn.first) << firstIn.second;
             queue_.erase(queue_.begin());
         }
         else
+        {
             next_ = true;
+        }
 
         deltaTime_ = sf::Time::Zero;
-        i_ = 0;
+        currentCharacter_ = 0;
         output_ = "";
     }
     else
@@ -164,7 +167,7 @@ void mvn::DialogueManager::enabledAutoMode()
 
 void mvn::DialogueManager::setRatio(float ratio)
 {
-    if(ratio <= 0)
+    if (ratio <= 0)
         ratio_ = 1;
 
     ratio_ = ratio;
